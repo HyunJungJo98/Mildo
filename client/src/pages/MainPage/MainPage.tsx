@@ -57,12 +57,13 @@ const MainPage = () => {
           const longitude = geolocationPosition.coords.longitude;
           const usersLocationResponse: UsersLocationResponseTypes =
             await apis.getUsersLocation(latitude, longitude);
-          const userLocation =
-            usersLocationResponse.results[0].region.area1.name;
 
           if (!usersLocationResponse.results) {
             resolve(DEFAULT_COORDINATES);
           }
+
+          const userLocation =
+            usersLocationResponse.results[0].region.area1.name;
 
           if (isUserInSeoulOrGwaCheon(userLocation)) {
             resolve({ latitude, longitude });

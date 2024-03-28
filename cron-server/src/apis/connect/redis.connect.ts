@@ -19,7 +19,7 @@ redisClient.on('connect', () => {
 });
 
 redisClient.on('error', err => {
-  console.log(err);
+  console.log('[REDIS ERROR]', err);
 });
 
 export const connectRedis = async () => {

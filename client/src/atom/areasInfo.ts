@@ -15,7 +15,18 @@ interface GetAllAreaResponseTypes {
 export const [allAreasInfoAtom] = atomsWithQuery<SortAllAreasTypes[]>(_ => ({
   queryKey: ['areas'],
   queryFn: async () => {
-    const { data: allAreas }: GetAllAreaResponseTypes = await apis.getAllArea();
+    // const { data: allAreas }: GetAllAreaResponseTypes = await apis.getAllArea();
+    const allAreas = {
+      ok: true,
+      data: {
+        populationMax: 10000,
+        populationMin: 100,
+        populationLevel: '혼잡',
+        populationTime: '2023-02-23',
+        latitude: 37.403019,
+        longitude: 126.718889
+      }
+    };
     const sortAllAreas: SortAllAreasTypes[] = Object.entries(allAreas).sort(
       (prev, next) => next[1].latitude - prev[1].latitude
     );
