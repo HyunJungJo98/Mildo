@@ -122,6 +122,7 @@ export default {
     const recentAreaPopulation = await redisService.getRecentAreaPopulation();
     // 위도/경도 50개 가져오기
     const allAreaCoordinate = await areaService.getAllAreaCoordinate();
+
     if (recentAreaPopulation && allAreaCoordinate) {
       return mergeAreaCoordinatePopulation(
         allAreaCoordinate,

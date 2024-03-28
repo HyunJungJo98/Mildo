@@ -8,6 +8,7 @@ export default {
     try {
       // redis에서 최근순 데이터 50개 가져오기
       const recentAreaInfo = await seoulService.getRecentAreaInfo();
+
       if (recentAreaInfo) {
         res.status(200).json({ ok: true, data: recentAreaInfo });
         return;
@@ -22,10 +23,12 @@ export default {
     const redisPastInformation = await redisService.getPastInformation(
       areaName
     );
+
     if (!redisPastInformation) {
       const mongoPastInformation = await seoulService.getPastAreaPopulation(
         areaName
       );
+
       return res.status(200).json({ ok: true, data: mongoPastInformation });
     }
     const redisSortedInformation = await seoulService.getSortedPastInformation(
@@ -36,6 +39,7 @@ export default {
   },
   searchArea: async (req: Request, res: Response) => {
     const { areaName } = req.query;
+
     if (areaName === '') {
       res.status(200).json({ ok: true, data: {} });
       return;
@@ -44,6 +48,7 @@ export default {
       const relatedAreaInfo = await areaService.getRelatedAreaInfo(
         areaName as string
       );
+
       if (relatedAreaInfo) {
         res.status(200).json({ ok: true, data: relatedAreaInfo });
         return;
