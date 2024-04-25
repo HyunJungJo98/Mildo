@@ -23,8 +23,8 @@ export const [allAreasInfoAtom] = atomsWithQuery<SortAllAreasTypes[]>(_ => ({
         populationMin: 100,
         populationLevel: '혼잡',
         populationTime: '2023-02-23',
-        latitude: 37.403019,
-        longitude: 126.718889
+        latitude: 37.570348086429135,
+        longitude: 126.97579622268678
       }
     };
     const sortAllAreas: SortAllAreasTypes[] = Object.entries(allAreas).sort(

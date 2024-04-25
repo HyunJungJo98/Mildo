@@ -4,8 +4,10 @@ import { AreaCoordinateTypes } from '../types/interfaces';
 export default {
   getAllAreaCoordinate: async (): Promise<AreaCoordinateTypes | null> => {
     const result: AreaCoordinateTypes = {};
+
     try {
       const areas = await areaRepository.findAll();
+
       if (areas) {
         areas.map(area => {
           result[area.areaName] = {
