@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import xml2js from 'xml2js';
 import dotenv from 'dotenv';
 
@@ -46,19 +47,21 @@ export default {
   getSeoulData: async (): Promise<CityDataTypes[]> => {
     const cityData: CityDataTypes[] = [];
     let allAreaNames = null;
-    const turn = new Date().getHours() % 3;
+
     try {
       allAreaNames = await areaService.getAllAreaCoordinate();
+
       for (const areaName of Object.keys(allAreaNames!)) {
         const cityDataXml = await getAxiosSeoulArea(
           areaName,
-          `${process.env[`SEOUL_CITY_API_ACCESS_KEY_${turn}`]}`
+          `${process.env.SEOUL_CITY_API_ACCESS_KEY}`
         );
+
         const cityDataJson = await xml2js.parseStringPromise(cityDataXml);
 
         if (!isVaildCityData(cityDataJson)) {
           cityData.push({
-            areaName: areaName,
+            areaName,
             populationMin: '',
             populationMax: '',
             populationLevel: '',
@@ -91,7 +94,7 @@ export default {
     let populationTime = '';
     const convertPopulationSchemaData: PopulationSchemaTypes[] = cityData.map(
       data => {
-        populationTime === '' ? (populationTime = data.populationTime) : '';
+        populationTime === '' ? data.populationTime : '';
         return {
           ...data,
           populationMin: +data.populationMin,
@@ -100,7 +103,9 @@ export default {
         };
       }
     );
+
     let responseData = null;
+
     try {
       // MongoDB에 저장
       responseData = await populationRepository.saveMany(
